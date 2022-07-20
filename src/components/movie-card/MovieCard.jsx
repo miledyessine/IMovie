@@ -13,12 +13,12 @@ const MovieCard = props => {
 
     const item  = props.item;
 
-    const link = '/' + category[props.category] + '/' + item.id;
+    const linke = '/' + category[props.category] + '/' + item.id;
 
     const bg = apiConfig.w500Image(item.poster_path || item.backdrop_path);
 
     return (
-        <Link to={link}>
+        <Link to={linke}>
             <div className="movie-card" style={{backgroundImage: `url(${bg})`}}>
                 <i className="bx"></i>
             </div>
