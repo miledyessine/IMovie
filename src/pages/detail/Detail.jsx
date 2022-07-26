@@ -7,6 +7,7 @@ import apiConfig from '../../api/apiConfig';
 import './detail.scss';
 import CastList from './CastList';
 import VideoList from './VideoList';
+import StarRating from '../../components/star-rating/StarRating';
 
 import MovieList from '../../components/movie-list/MovieList';
 
@@ -45,7 +46,9 @@ const Detail = () => {
                                             <span key={i} className="genres__item">{genre.name}</span>
                                         ))
                                     }
+                                    
                                 </div>
+                                <h2>Rating: <StarRating onClick={console.log(item.rating)}/></h2>
                                 <p className="overview">{item.overview}</p>
                                 <div className="cast">
                                     <div className="section__header">

@@ -4,12 +4,17 @@ import {OutlineButton} from '../components/button/Button'
 import HeroSlide from '../components/hero-slide/HeroSlide';
 import MovieList from '../components/movie-list/MovieList';
 
+//import Signup from '../components/authentification/Signup';
+//import Login from '../components/authentification/Login';
+
 import { category,movieType,tvType } from '../api/tmdbApi';
 
 const Home = () => {
     return (
         <>
             <HeroSlide/>
+            {/* <Signup></Signup>
+            <Login></Login> */}
             <div className="container">
                 <div className="section mb-3">
                     <div className="section__header mb-2">
