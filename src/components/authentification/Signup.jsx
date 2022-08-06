@@ -1,8 +1,14 @@
 import { useState } from "react";
 import "./signup.scss";
 import FormInput from "./FormInput";
+import axios from 'axios';
 
-const Signup = () => {
+import logo from '../../assets/logo.png';
+
+import bg from '../../assets/footer-bg.jpg';
+
+
+const Signup = (props) => {
     const [values, setValues] = useState({
         username: "",
         email: "",
@@ -62,10 +68,36 @@ const Signup = () => {
         setValues({ ...values, [e.target.name]: e.target.value });
     };
 
+    const submit = (e) => {
+        
+        axios
+        .post('http://localhost:1337/api/auth/local/register', {
+            username: values.username,
+            email: values.email,
+            password: values.password,
+        })
+        .then((response) => {
+            // Handle success.
+            console.log('Well done!');
+            console.log('User profile', response.data.user);
+            console.log('User token', response.data.jwt);
+            props.newUser(true);
+        })
+        .catch((error) => {
+            // Handle error.
+            console.log('An error occurred:', error.response);
+        });
+    }
+
+
     return (
-        <div className="Signup">
-            <form onSubmit={handleSubmit}>
-                <h1>Register</h1>
+        <div className="Signup" style={{backgroundImage: `url(${bg})`}}>
+            <div className="info">
+                    <img src={logo} alt="Logo Imovie" className="logoAuth"/>
+                    <p>Welcome to IMovie</p>
+                </div>
+            <form className="formLog" onSubmit={handleSubmit}>
+                <h1 className="titreLog">Register</h1>
                 {inputs.map((input) => (
                 <FormInput
                     key={input.id}
@@ -73,8 +105,9 @@ const Signup = () => {
                     value={values[input.name]}
                     onChange={onChange}
                 />
-                ))}
-                <button className="btnSub">Submit</button>
+                ))
+                }
+                <button className="btnSub" onClick={submit}>Submit</button>
             </form>
         </div>
     );

@@ -5,7 +5,7 @@ import './star-rating.scss';
 
 
 
-const StarRating = () => {
+const StarRating = (props) => {
     const [rating,setRating] =useState(-1);
 
     const setRate= rate =>evt=> {
@@ -14,7 +14,7 @@ const StarRating = () => {
     }
     
     const rateClicked = rate =>evt=> {
-        console.log(rate);
+        props.rating(rate);
     }
 
     return (

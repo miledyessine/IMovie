@@ -1,9 +1,7 @@
 @use "../../scss/" as *;
 
 .logo {
-    font-size: 2.5rem;
-    font-weight: 600;
-
+    
     @include flex(center, unset);
 
     img {
@@ -90,4 +88,12 @@
             }
         }
     }
+}
+.fa-right-from-bracket{
+    height: 1.3rem;
+    cursor: pointer;
+    
+}
+.fa-right-from-bracket:hover {
+    color: $main-color;
 }

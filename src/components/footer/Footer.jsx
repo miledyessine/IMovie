@@ -7,7 +7,10 @@ import { Link } from 'react-router-dom';
 import bg from '../../assets/footer-bg.jpg';
 import logo from '../../assets/logo.png';
 
+
+
 const Footer = () => {
+    
     return (
         <div className="footer" style={{backgroundImage: `url(${bg})`}}>
             <div className="footer__content container">
@@ -24,7 +27,7 @@ const Footer = () => {
                         <Link to="/">Contact us</Link>
                     </div>
                     <div className="footer__content__menu">
-                        <Link to="/">About us</Link>
+                    <Link to="/">About us</Link>
                     </div>
                 </div>
             </div>

@@ -1,12 +1,26 @@
 import { useState } from "react";
 import "./signup.scss";
 import FormInput from "./FormInput";
+import axios from 'axios';
+import {useCookies} from 'react-cookie';
+import { Link ,BrowserRouter} from 'react-router-dom';
 
-const Signup = () => {
+import logo from '../../assets/logo.png';
+
+import bg from '../../assets/footer-bg.jpg';
+
+
+
+
+const Login = (props) => {
     const [values, setValues] = useState({
         username: "",
         password: "",
     });
+
+    const [token,setToken]=useCookies(["user-token"]);
+
+
 
     const inputs = [
         {
@@ -21,7 +35,7 @@ const Signup = () => {
         required: true,
         },
         {
-        id: 3,
+        id: 2,
         name: "password",
         type: "password",
         placeholder: "Password",
@@ -43,23 +57,52 @@ const Signup = () => {
 
     
 
+    const submit = (e) => {
+        // Request API.
+        axios
+        .post('http://localhost:1337/api/auth/local', {
+            identifier: values.username,
+            password: values.password,
+        })
+        .then((response) => {
+            // Handle success.
+            console.log('Well done!');
+            console.log('User profile', response.data.user);
+            console.log('User token', response.data.jwt);
+            setToken("user-token",response.data.jwt);
+        })
+        .catch((error) => {
+            // Handle error.
+            console.log('An error occurred:', error.response);
+        });
+    }
+
 
     return (
-        <div className="Signup">
-            <form onSubmit={handleSubmit}>
-                <h1>Login</h1>
-                {inputs.map((input) => (
-                <FormInput
-                    key={input.id}
-                    {...input}
-                    value={values[input.name]}
-                    onChange={onChange}
-                />
-                ))}
-                <button className="btnSub">Submit</button>
-            </form>
-        </div>
+            
+            <div className="Signup" style={{backgroundImage: `url(${bg})`}}>
+                <div className="info">
+                    <img src={logo} alt="Logo Imovie" className="logoAuth"/>
+                    <p>Welcome to IMovie</p>
+                </div>
+                
+                <form className="formLog" onSubmit={handleSubmit}>
+                    <h1 className="titreLog">Log In</h1>
+                    {inputs.map((input) => (
+                    <FormInput
+                        key={input.id}
+                        {...input}
+                        value={values[input.name]}
+                        onChange={onChange}
+                    />
+                    ))}
+                    <button className="btnSub" onClick={submit}>Submit</button>
+                    <p className="newSign">New to IMovie? <button className="aSign" 
+                        onClick={()=>{props.newUser(false)}} >Sign up Now</button>.</p>
+                </form>
+            </div>
+        
     );
-    };
+};
 
-export default Signup;
+export default Login;

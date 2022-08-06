@@ -3,7 +3,7 @@ import { useParams } from 'react-router';
 
 import tmdbApi from '../../api/tmdbApi';
 import apiConfig from '../../api/apiConfig';
-
+import axios from 'axios';
 import './detail.scss';
 import CastList from './CastList';
 import VideoList from './VideoList';
@@ -11,11 +11,15 @@ import StarRating from '../../components/star-rating/StarRating';
 
 import MovieList from '../../components/movie-list/MovieList';
 
+import {useCookies} from 'react-cookie';
+
 const Detail = () => {
 
     const { category, id } = useParams();
 
     const [item, setItem] = useState(null);
+
+    const [token,setToken]=useCookies(["user-token"]);
 
     useEffect(() => {
         const getDetail = async () => {
@@ -25,6 +29,32 @@ const Detail = () => {
         }
         getDetail();
     }, [category, id]);
+
+    
+
+    const rated=(rate)=> {
+
+        const rateInfo={
+            data:{
+                rate,
+                movieId:item.id
+            }
+        }
+
+        const add= fetch('http://localhost:1337/api/ratings?populate=%2A',{
+            method: 'POST',
+            headers: {
+                'Authorization':'Bearer '+token["user-token"],
+                'Content-Type': 'application/json',
+                'Accept':'application/json'
+            },
+            body: JSON.stringify(rateInfo)
+        }).then( (response) => {
+            console.log(response.json());
+        })
+    }
+
+    
 
     return (
         <>
@@ -48,7 +78,7 @@ const Detail = () => {
                                     }
                                     
                                 </div>
-                                <h2>Rating: <StarRating onClick={console.log(item.rating)}/></h2>
+                                <h2>Rate it: <StarRating rating={rated}/></h2>
                                 <p className="overview">{item.overview}</p>
                                 <div className="cast">
                                     <div className="section__header">

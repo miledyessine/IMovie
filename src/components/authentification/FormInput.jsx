@@ -11,8 +11,8 @@ const handleFocus = (e) => {
 
 return (
     <div className="formInput">
-    <label>{label}</label>
-    <input
+    <label className="labelAuth">{label}</label>
+    <input className="inputAuth"
         {...inputProps}
         onChange={onChange}
         onBlur={handleFocus}
@@ -21,7 +21,7 @@ return (
         }
         focused={focused.toString()}
     />
-    <span>{errorMessage}</span>
+    <span className="spanAuth">{errorMessage}</span>
     </div>
 );
 };

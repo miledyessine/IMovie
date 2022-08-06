@@ -1,6 +1,10 @@
 import React, { useRef,useEffect  } from 'react';
 
 import { Link, useLocation } from 'react-router-dom';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
+
+import {useCookies} from 'react-cookie';
 
 import './header.scss';
 
@@ -22,6 +26,12 @@ const headerNav = [
 ];
 
 const Header = () => {
+
+    const [token,setToken,deleteToken] =useCookies(["user-token"]);
+
+    const logout = () => {
+        deleteToken(["user-token"]);
+    }
 
     
     const { pathname } = useLocation();
@@ -49,7 +59,7 @@ const Header = () => {
             <div className="header__wrap container">
                 <div className="logo">
                     <Link to="/">
-                        <img src={logo} alt="" />
+                        <img src={logo} alt="Logo Imovie" />
                     </Link>
                 </div>
                 <ul className="header__nav">
@@ -62,7 +72,9 @@ const Header = () => {
                             </li>
                         ))
                     }
+                    <FontAwesomeIcon icon={faRightFromBracket} onClick={logout} />
                 </ul>
+                
             </div>
         </div>
     );
